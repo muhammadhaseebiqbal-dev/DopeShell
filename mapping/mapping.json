@@ -1,0 +1,27 @@
+[
+    {
+        "command": "spitdir",
+        "description": "list down file/folders of current directory"
+    },
+    {
+        "command": "dive",
+        "description": "change directory to specified path"
+    },
+    {
+        "command": "reveal",
+        "description": "show present working directory path"
+    },
+    {
+        "command": "whoami",
+        "description": "show user account name"
+    },
+    
+    {
+        "command": "endsesh",
+        "description": "terminate the current shell session"
+    },
+    {
+        "command": "--helpme",
+        "description": "show list of supported commands"
+    }
+]
