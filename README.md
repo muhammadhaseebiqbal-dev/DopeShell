@@ -87,6 +87,11 @@ DopeShell/
 | `reveal` | Show present working directory path | `reveal` |
 | `whoami` | Display current user account name | `whoami` |
 | `endsesh` | Terminate the current shell session | `endsesh` |
+| `throw` | Move any file/dir from src path to destined path | `throw source destination` |
+| `clone` | Copy any file/dir from src path to destined path (must use absolute paths) | `clone source destination` |
+| `swap` | Rename files and folders | `swap oldname newname` |
+| `snap` | Delete the file and the whole directory | `snap path` |
+| `wipe` | Clear the console | `wipe` |
 | `--helpme` | Show list of all supported commands | `--helpme` |
 
 ### 📝 **Command Examples**
@@ -104,6 +109,15 @@ reveal
 
 # Get user information
 whoami
+
+# File and directory operations
+throw oldfile.txt /path/to/newlocation/
+clone 'C:/source/file.txt' 'C:/destination/file.txt'
+swap oldname.txt newname.txt
+snap /path/to/delete
+
+# System operations
+wipe
 
 # View all commands
 --helpme
@@ -161,6 +175,8 @@ Instruction Set loaded successfully ✅
 ### ✅ **Completed Features**
 - [x] Basic shell framework
 - [x] Cross-platform file operations
+- [x] File manipulation commands (move, copy, rename, delete)
+- [x] Console management utilities
 - [x] JSON command mapping system
 - [x] Error handling and validation
 - [x] ASCII branding and UI
@@ -169,7 +185,8 @@ Instruction Set loaded successfully ✅
 ### 🔮 **Future Roadmap**
 
 #### Phase 1: Extended Command Support
-- [ ] File manipulation commands (`copy`, `move`, `delete`)
+- [x] File manipulation commands (`throw`, `clone`, `swap`, `snap`)
+- [x] Console utilities (`wipe`)
 - [ ] Text processing commands (`cat`, `grep`, `find`)
 - [ ] System monitoring commands (`ps`, `top`, `df`)
 - [ ] Network utilities (`ping`, `curl`, `wget`)
@@ -218,7 +235,7 @@ Then implement the command logic in `source.py` within the `executeCommand` meth
 ## 🐛 **Known Issues & Limitations**
 
 ### Current Limitations
-- Limited command set (6 core commands)
+- Extended command set (11 core commands implemented)
 - No command history
 - No tab completion
 - Basic error messages
