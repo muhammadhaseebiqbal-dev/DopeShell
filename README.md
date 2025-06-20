@@ -26,16 +26,17 @@
 
 ## 🚀 **Overview**
 
-**DopeShell** is a lightweight, custom shell implementation written in Python that provides essential file system navigation commands with a sleek interface. Built with extensibility in mind, it features a JSON-based command mapping system and cross-platform compatibility.
+**DopeShell** is a lightweight, custom shell implementation written in Python that provides essential file system navigation commands with a sleek interface. Built with extensibility in mind, it features a modular component architecture and cross-platform compatibility.
 
 ### ✨ **Key Features**
 
 - 🖥️ **Cross-Platform Support** - Works seamlessly on Windows and Linux
-- 🗂️ **Custom Command Mapping** - JSON-based command configuration
-- 🎨 **ASCII Branding** - Eye-catching startup banner
-- 🔧 **Extensible Architecture** - Easy to add new commands
+- 🏗️ **Modular Architecture** - Clean separation with engine/components structure
+- 🎨 **ASCII Branding** - Eye-catching startup banner with system diagnostics
+- 🔧 **Extensible Design** - Easy to add new commands via component system
 - ⚡ **Lightweight** - Minimal dependencies, maximum performance
-- 🛡️ **Error Handling** - Robust error management system
+- 🛡️ **Error Handling** - Robust error management with user-friendly messages
+- 📁 **Advanced File Operations** - Complete file/directory manipulation suite
 
 ---
 
@@ -43,11 +44,18 @@
 
 ```
 DopeShell/
-├── 📄 source.py              # Main shell implementation
-├── 📄 requirments.txt        # Python dependencies
-├── 📄 README.md              # This documentation
-├── 📁 mapping/
-   └── 📄 mapping.json       # Command definitions and descriptions
+├── 📄 main.py                        # Main entry point - application launcher
+├── 📄 README.md                      # Project documentation
+├── 📄 requirments.txt                # Python dependencies
+├── 📄 LICENSE                        # MIT license file
+├── 📄 .gitignore                     # Git ignore rules
+├── 📁 engine/                        # Core shell engine
+│   ├── 📄 dopeshell.py              # Main DopeShell class implementation
+│   └── 📁 components/               # Modular components
+│       ├── 📄 core.py               # Command implementations
+│       ├── 📄 utils.py              # Utility functions & path parsing
+│       └── 📄 imports.py            # Import management
+└── 📁 .git/                         # Git repository metadata
 ```
 
 ---
@@ -62,7 +70,7 @@ DopeShell/
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/HaseebIqbal1199/DopeShell.git
    cd DopeShell
    ```
 
@@ -73,80 +81,82 @@ DopeShell/
 
 3. **Run DopeShell**
    ```bash
-   python source.py
+   python main.py
    ```
 
 ---
 
 ## 🎯 **Currently Supported Commands**
 
-| Command | Description | Usage |
-|---------|-------------|--------|
+| Command | Description | Usage Example |
+|---------|-------------|---------------|
 | `spitdir` | List files and folders in current directory | `spitdir` |
-| `dive` | Change directory to specified path | `dive /path/to/directory` |
+| `dive` | Change directory to specified path | `dive 'C:/Users/Documents'` |
 | `reveal` | Show present working directory path | `reveal` |
 | `whoami` | Display current user account name | `whoami` |
-| `endsesh` | Terminate the current shell session | `endsesh` |
-| `throw` | Move any file/dir from src path to destined path | `throw source destination` |
-| `clone` | Copy any file/dir from src path to destined path (must use absolute paths) | `clone source destination` |
-| `swap` | Rename files and folders | `swap oldname newname` |
-| `snap` | Delete the file and the whole directory | `snap path` |
-| `wipe` | Clear the console | `wipe` |
+| `halt` | Terminate the current shell session | `halt` |
+| `throw` | Move file/directory from source to destination | `throw 'source.txt' 'destination/'` |
+| `clone` | Copy file/directory from source to destination | `clone 'file.txt' 'backup/file.txt'` |
+| `swap` | Rename files and folders | `swap 'oldname.txt' 'newname.txt'` |
+| `snap` | Delete files and directories | `snap 'unwanted_file.txt'` |
+| `wipe` | Clear the console screen | `wipe` |
 | `--helpme` | Show list of all supported commands | `--helpme` |
 
 ### 📝 **Command Examples**
 
 ```bash
-# Navigate to a directory
-dive Documents
-dive 'C:/Program Files'
+# Navigation and Directory Operations
+dive Documents                    # Navigate to Documents folder
+dive 'C:/Program Files'          # Navigate using absolute path
+spitdir                          # List current directory contents
+reveal                           # Show current working directory
 
-# List directory contents
-spitdir
+# File and Directory Management
+clone 'report.pdf' 'backup/'     # Copy file to backup folder
+throw 'temp.txt' 'archive/'      # Move file to archive folder
+swap 'draft.docx' 'final.docx'   # Rename file
+snap 'old_project/'              # Delete entire directory
 
-# Check current location
-reveal
-
-# Get user information
-whoami
-
-# File and directory operations
-throw oldfile.txt /path/to/newlocation/
-clone 'C:/source/file.txt' 'C:/destination/file.txt'
-swap oldname.txt newname.txt
-snap /path/to/delete
-
-# System operations
-wipe
-
-# View all commands
---helpme
-
-# Exit shell
-endsesh
+# System Operations
+whoami                           # Get current user information
+wipe                             # Clear console screen
+--helpme                         # View all available commands
+halt                             # Exit DopeShell
 ```
 
 ---
 
-## ⚙️ **Core Architecture**
+## ⚙️ **Architecture Overview**
 
-### 🏗️ **DopeShell Class Structure**
+### 🏗️ **Core Components**
 
 ```python
-class DopeShell:
-    def __init__(self)              # Initialize shell environment
-    def diagnostic(self)            # System health check
-    def loadInstructionSet(self)    # Load command mappings from JSON
-    def asciiBranding(self)         # Display ASCII banner
-    def executeCommand(self, cmd)   # Command execution engine
+# Main Entry Point
+main.py                          # Application launcher with main() function
+
+# Core Engine
+engine/dopeshell.py             # Main DopeShell class
+    def __init__()                # Initialize shell environment  
+    def diagnostic()              # System health check
+    def executeCommand()          # Command execution engine
+    def asciiArt()               # Display ASCII banner
+    def goToRoot()               # Handle root directory navigation
+    def _init_env()              # Environment initialization with diagnostics
+
+# Component Modules  
+engine/components/
+    core.py                      # All command implementations
+    utils.py                     # Path parsing utilities (pathTokeniser functions)
+    imports.py                   # Centralized import management
 ```
 
-### 🔧 **Key Components**
+### 🔧 **Key Design Patterns**
 
-- **Command Parser**: Interprets user input and maps to functions
-- **Cross-Platform Handler**: Adapts commands for Windows/Linux
-- **JSON Configuration**: External command mapping for easy extensibility
-- **Error Management**: Comprehensive error handling and user feedback
+- **Modular Architecture**: Clean separation of concerns with engine/components
+- **Command Mapping**: Dictionary-based command-to-function mapping in engine
+- **Path Intelligence**: Smart path parsing with file/directory type detection
+- **Cross-Platform Compatibility**: Automatic Windows/Linux command adaptation
+- **Error Resilience**: Comprehensive exception handling with user feedback
 
 ---
 
@@ -157,7 +167,7 @@ class DopeShell:
 Checking instance Config!
 Current Platform check "Windows" ✅
 Dope Shell is working perfectly ✅
-Instruction Set loaded successfully ✅
+Checking system integrity ✅
 
 [ASCII BANNER DISPLAY]
 
@@ -166,21 +176,22 @@ Instruction Set loaded successfully ✅
 
 ### Command Prompt Format
 - **Windows**: `~/path/to/directory: `
-- **Linux**: `~/path/to/directory `
+- **Linux**: `~/path/to/directory: `
 
 ---
 
 ## 🚧 **Development Status**
 
 ### ✅ **Completed Features**
-- [x] Basic shell framework
-- [x] Cross-platform file operations
-- [x] File manipulation commands (move, copy, rename, delete)
+- [x] Modular shell framework with component architecture
+- [x] Cross-platform file operations (Windows/Linux)
+- [x] Complete file manipulation suite (copy, move, rename, delete)
+- [x] Directory navigation and listing
 - [x] Console management utilities
-- [x] JSON command mapping system
-- [x] Error handling and validation
-- [x] ASCII branding and UI
-- [x] Core navigation commands
+- [x] Advanced path parsing with type detection
+- [x] Error handling and user feedback system
+- [x] ASCII branding with system diagnostics
+- [x] Session management and lifecycle control
 
 ### 🔮 **Future Roadmap**
 
@@ -197,6 +208,7 @@ Instruction Set loaded successfully ✅
 - [ ] Custom aliases and shortcuts
 - [ ] Script execution support
 - [ ] Environment variable management
+- [ ] Configuration file support
 
 #### Phase 3: AI Integration 🤖
 - [ ] **Agentic AI Assistant** for system management
@@ -215,35 +227,42 @@ Instruction Set loaded successfully ✅
 
 ---
 
-## 🔧 **Configuration**
+## 🔧 **Technical Implementation**
 
-### Adding Custom Commands
+### Path Parsing System
+DopeShell features an intelligent path parsing system in `utils.py`:
 
-Edit `mapping/mapping.json` to add new commands:
+- **pathTokeniserMulti()**: Handles commands with source and destination paths
+- **pathTokenizerSingle()**: Handles commands with single path arguments
+- **Type Detection**: Automatically identifies files vs directories using regex patterns
+- **Cross-Platform**: Handles both Windows (`\`) and Unix (`/`) path separators
 
-```json
-{
-    "command": "your_command",
-    "description": "Description of what your command does"
+### Command Engine
+The command execution system maps user input to specific functions:
+
+```python
+self.engine = {
+    "spitdir": spitdir,    "dive": dive,      "halt": halt,
+    "whoami": whoami,      "--helpme": helpme, "reveal": reveal,
+    "clone": clone,        "throw": throw,     "swap": swap,
+    "snap": snap,          "wipe": wipe
 }
 ```
-
-Then implement the command logic in `source.py` within the `executeCommand` method.
 
 ---
 
 ## 🐛 **Known Issues & Limitations**
 
 ### Current Limitations
-- Extended command set (11 core commands implemented)
-- No command history
+- Path parsing requires quotes for paths with spaces
+- No command history persistence
 - No tab completion
-- Basic error messages
+- Limited to basic file operations
 
 ### Reported Issues
-- Path handling with spaces requires quotes
-- Some Unicode characters may not display correctly
-- Limited customization options
+- Some Unicode characters may not display correctly in all terminals
+- Path resolution edge cases with nested directories
+- Error messages could be more descriptive for complex scenarios
 
 ---
 
@@ -262,6 +281,7 @@ We welcome contributions! Here's how you can help:
 - Add comments for complex logic
 - Update documentation for new features
 - Test on both Windows and Linux
+- Add new commands to both `core.py` and `keywords` array
 
 ---
 
