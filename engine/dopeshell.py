@@ -1,8 +1,4 @@
-from os import  getcwd, path, chdir
-from getpass import getuser
-import platform
-from time import sleep
-from engine.components import core
+from components.core import *
 
 class DopeShell:
     def __init__(self):
@@ -60,17 +56,17 @@ class DopeShell:
             }
         ]
         self.engine = {
-            "spitdir": core.spitdir,
-            "dive": core.dive,
-            "halt": core.halt,
-            "whoami": core.whoami,
-            "--helpme": core.helpme,
-            "reveal": core.reveal,
-            "clone": core.clone,
-            "throw": core.throw,
-            "swap": core.swap,
-            "snap": core.snap,
-            "wipe": core.wipe
+            "spitdir": spitdir,
+            "dive": dive,
+            "halt": halt,
+            "whoami": whoami,
+            "--helpme": helpme,
+            "reveal": reveal,
+            "clone": clone,
+            "throw": throw,
+            "swap": swap,
+            "snap": snap,
+            "wipe": wipe
         }
 
         # initialize the environment

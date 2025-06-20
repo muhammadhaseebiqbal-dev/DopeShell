@@ -1,5 +1,4 @@
-from regex import fullmatch
-
+from .imports import *
 # Handle parsing of commands with duo paths (i.e: src, des)
 def pathTokeniserMulti(input):
     try:
