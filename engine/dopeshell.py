@@ -1,14 +1,16 @@
-from os import system, getcwd, path
+from os import  getcwd, path, chdir
+from getpass import getuser
 import platform
 from time import sleep
-from engine import core
+from engine.components import core
 
 class DopeShell:
     def __init__(self):
         self.basePath = getcwd() # Directory in which dopeshell files placed
-        self.root = path.expanduser("~") # Path of the root (Dopeshell operates from here at starting)
+        self.root = chdir(path.expanduser("~")) # Path of the root (Dopeshell operates from here at starting)
         self.platform = platform.system() # Current operating System name
         self.history = [] # Stores history in the form of dicts
+        self.life = 0 # to manage the session life (just for console operation)
 
         # Set of defined keywords load here from mapping
         self.keywords = [
@@ -70,6 +72,9 @@ class DopeShell:
             "snap": core.snap,
             "wipe": core.wipe
         }
+
+        # initialize the environment
+        self._init_env();
     def asciiArt(self):
         print(
             r'''
@@ -82,57 +87,58 @@ class DopeShell:
             '''
         )
 
-    def executeCommand(self, commandX): 
-        
-        if not commandX:
+    # Handle initial rooth redirection
+    def goToRoot(self):
+        if self.platform == "Windows":
+            chdir(f"C:/users/{getuser()}")
+        else:
+            path.expanduser("~")
+
+        self.root = getcwd()
+
+    def executeCommand(self, command):    
+        if not command:
             return # return if not any command input found
         else:
-            command_name = commandX.split(' ')[0].strip()
+            command_name = command.split(' ')[0].strip()
+            
+            # check if it exist in library
             if command_name in self.engine:
-                self.engine[command_name](self, commandX)
+                self.engine[command_name](self, command)
             else:
-                print("⚠️  Command is not available in intriction set! Type --helpme to get documentation")
+                print("⚠️  Command is not available in keyword set! Type --helpme to get documentation")
 
     # TO daignoses the health of system
     def diagnostic(self):
         return True
 
-def setupEnvironment(_instance, is_start):
-    if is_start:
-        system("echo off")
-        # engine["wipe"](_instance, "hello")
+    # Initiallise the environment
+    def _init_env(self):
+        self.executeCommand("wipe")
         print("Checking instance Config!")
         sleep(0.5)
-
-        print(f"Current Platform check \"{_instance.platform}\" ✅")
-
+        print(f"Current Platform check \"{self.platform}\" ✅")
         sleep(0.5)
 
-        if _instance.diagnostic():
+        if self.diagnostic():
             print("Dope Shell is working perfectly ✅")
         else:
-            print("🪲 encountered!")
-
+                print("🪲 encountered!")
         sleep(0.5)
 
-        print("Instruction Set loadded successfuly ✅")
-
+        print("Checking system integrity ✅")
         sleep(2)
-        # _instance.clearConsole(
-    _instance.asciiArt();
-    print("\n");
+        
+        self.executeCommand("wipe")
+        self.goToRoot()
+        self.asciiArt();
+        print("\n");
 
+        while True:
+            if self.platform == "Windows":
+                command = input(f"{self.root.replace("C:", "~").replace("\\", "/").strip() + ": "}")
+                self.executeCommand(command.strip())
+            else:
+                command = input(f"~{self.root}:")
+                self.executeCommand(command.strip())
 
-if __name__ == "__main__":
-    _instance = DopeShell()
-    setupEnvironment(_instance, True)
-    print(_instance.basePath)
-    print(_instance.root)
-
-    while True:
-        if _instance.platform == "Windows":
-            commandX = input(f"{_instance.root.replace("C:", "~").replace("\\", "/").strip() + ": "}")
-            _instance.executeCommand(commandX.strip())
-        else:
-            commandX = input(f"~{_instance.root}:")
-            _instance.executeCommand(commandX.strip())
