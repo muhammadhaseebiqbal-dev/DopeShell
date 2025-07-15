@@ -1,4 +1,10 @@
-from .utils import *
+# Import specific functions from imports and utils
+from .imports import (
+    system, getcwd, chdir, getuser, subprocess, 
+    sleep, copy, copytree, move, rmtree, rename, remove
+)
+from .utils import pathTokeniserMulti, pathTokenizerSingle, pathtokenizerMultiple
+import builtins
 
 # Handle directory exposure implemetation. (ie: expore directory files)
 def spitdir(self, input):
@@ -150,3 +156,71 @@ def wipe(self, input):
     # incrementing the life by 1
     self.life += 1
 
+# Handle readout implementation
+def readout(self, input):
+    if not input: return
+                
+    try:
+        paths, types = pathtokenizerMultiple(input)
+        accumulator = '' # contain the whole text content to cover concat
+        counter = 0 # to track the file being opened
+        line_number = 0 # for line numbering
+
+        if '>' in input:
+            try:
+                if '>>>' in input:
+                    print('paths:', paths)
+                    print('types:', types)
+
+                    for type in types:
+                        with open(paths[counter], "a+") as file:
+                            file.seek(0)
+                            if counter == (len(types)-1):
+                                    print('accumulatorw:', accumulator)
+                                    file.write(accumulator)
+                            else:
+                                print('accumulatorr:', accumulator)
+                                accumulator += file.read()
+                                counter += 1
+                        file.close()
+                else:
+                    if len(paths) > 1:
+                        print("Yet supported for only single file! \n")
+
+                    if types[0] == 'file':
+                        capture = builtins.input("Enter you response: ");
+                        if '>>' in input: # to append the captured text
+                            with open(paths[0], "a") as file:
+                                file.write(capture)
+                            file.close()
+
+                        else: # to owerite the appended text
+                            with open(paths[0], "w") as file:
+                                file.write(capture)
+                            file.close()
+                    else:
+                        print("Trying again with file! \n")
+            except Exception as e:
+                print(f"Exception Occurred: {e} \n")
+
+        else:
+            # Iterating type to determine weather the typr is file or dir
+            for type in types:
+                if type == 'file':
+                        with open(paths[counter], "r+") as file:
+                            if '-n' in input: 
+                                for line in file.readlines():
+                                    accumulator += (f"{line_number}: {line}\n")
+                                    line_number += 1
+                            else: accumulator += file.read() # populating accumulator
+                            counter += 1
+                        file.close() # closing file to free up resources
+                else:
+                    print(f"Path {counter} is directory not file \n")
+            
+            # printing result finally
+            print(f"--------files content--------\n {"empty" if not accumulator else accumulator}")
+
+    except Exception as e:
+        print("Exception Occurred: ", e)
+    

@@ -1,60 +1,30 @@
-from components.core import *
+# Standard library imports
+import platform
+from os import getcwd, chdir
+from os.path import expanduser
+from getpass import getuser
+from time import sleep
+
+# Import specific command functions from components
+from .components.core import (
+    spitdir, dive, halt, whoami, helpme, 
+    reveal, clone, throw, swap, snap, wipe,
+    readout
+)
+from .components.keywords import keywords
 
 class DopeShell:
-    def __init__(self):
+    def __init__(self):        
         self.basePath = getcwd() # Directory in which dopeshell files placed
-        self.root = chdir(path.expanduser("~")) # Path of the root (Dopeshell operates from here at starting)
+        self.root = chdir(expanduser("~")) # Path of the root (Dopeshell operates from here at starting)
         self.platform = platform.system() # Current operating System name
         self.history = [] # Stores history in the form of dicts
         self.life = 0 # to manage the session life (just for console operation)
 
         # Set of defined keywords load here from mapping
-        self.keywords = [
-            {
-                "command": "spitdir",
-                "description": "list down file/folders of current directory"
-            },
-            {
-                "command": "dive",
-                "description": "change directory to specified path"
-            },
-            {
-                "command": "reveal",
-                "description": "show present working directory path"
-            },
-            {
-                "command": "whoami",
-                "description": "show user account name"
-            },           
-            {
-                "command": "halt",
-                "description": "terminate the current shell session"
-            },
-            {
-                "command": "throw",
-                "description": "move any file/dir from src path to destined path"
-            },
-            {
-                "command": "clone",
-                "description": "copy any file/dir from src path to destined path (must use absolute paths)"
-            },
-            {
-                "command": "swap",
-                "description": "to remane files and folders"
-            },
-            {
-                "command": "snap",
-                "description": "delete the file and the whole directory"
-            },
-            {
-                "command": "wipe",
-                "description": "clear the console"
-            },
-            {
-                "command": "--helpme",
-                "description": "show list of supported commands"
-            }
-        ]
+        self.keywords = keywords
+
+        # Mapping to execute each keyword implemetation
         self.engine = {
             "spitdir": spitdir,
             "dive": dive,
@@ -66,7 +36,8 @@ class DopeShell:
             "throw": throw,
             "swap": swap,
             "snap": snap,
-            "wipe": wipe
+            "wipe": wipe,
+            "readout": readout
         }
 
         # initialize the environment
@@ -83,12 +54,12 @@ class DopeShell:
             '''
         )
 
-    # Handle initial rooth redirection
+    # Handle initial rooth redirection    
     def goToRoot(self):
         if self.platform == "Windows":
             chdir(f"C:/users/{getuser()}")
         else:
-            path.expanduser("~")
+            expanduser("~")
 
         self.root = getcwd()
 
