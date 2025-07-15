@@ -99,6 +99,7 @@ DopeShell/
 | `clone` | Copy file/directory from source to destination | `clone 'file.txt' 'backup/file.txt'` |
 | `swap` | Rename files and folders | `swap 'oldname.txt' 'newname.txt'` |
 | `snap` | Delete files and directories | `snap 'unwanted_file.txt'` |
+| `readout` | Read file contents, write to files, or concatenate files | `readout 'file.txt'` |
 | `wipe` | Clear the console screen | `wipe` |
 | `--helpme` | Show list of all supported commands | `--helpme` |
 
@@ -116,6 +117,13 @@ clone 'report.pdf' 'backup/'     # Copy file to backup folder
 throw 'temp.txt' 'archive/'      # Move file to archive folder
 swap 'draft.docx' 'final.docx'   # Rename file
 snap 'old_project/'              # Delete entire directory
+
+# File Content Operations
+readout 'document.txt'           # Read and display file contents
+readout 'file.txt' -n            # Read file with line numbers
+readout 'data.txt' > 'output.txt' # Write input to file (overwrite)
+readout 'log.txt' >> 'archive.log' # Append input to file
+readout 'file1.txt' 'file2.txt' >>> 'combined.txt' # Concatenate files
 
 # System Operations
 whoami                           # Get current user information
@@ -186,6 +194,7 @@ Checking system integrity ✅
 - [x] Modular shell framework with component architecture
 - [x] Cross-platform file operations (Windows/Linux)
 - [x] Complete file manipulation suite (copy, move, rename, delete)
+- [x] Text processing with file reading/writing capabilities
 - [x] Directory navigation and listing
 - [x] Console management utilities
 - [x] Advanced path parsing with type detection
@@ -198,7 +207,8 @@ Checking system integrity ✅
 #### Phase 1: Extended Command Support
 - [x] File manipulation commands (`throw`, `clone`, `swap`, `snap`)
 - [x] Console utilities (`wipe`)
-- [x] Text processing commands (`readout`) [] (`grep`, `find`)
+- [x] Text processing commands (`readout` for file reading/writing)
+- [ ] Additional text utilities (`grep`, `find`)
 - [ ] System monitoring commands (`ps`, `top`, `df`)
 - [ ] Network utilities (`ping`, `curl`, `wget`)
 
