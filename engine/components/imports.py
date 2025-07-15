@@ -1,7 +1,12 @@
-from regex import fullmatch
-from os import  system, getcwd, path, chdir, rename, remove, rmdir
-from getpass import getuser
+# Standard library imports
 import platform
-from time import sleep
 import subprocess
+from time import sleep
+
+# OS and path operations
+from os import system, getcwd, chdir, rename, remove
+from os.path import expanduser
+from getpass import getuser
+
+# File operations
 from shutil import copy, copytree, move, rmtree

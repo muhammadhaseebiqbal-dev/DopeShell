@@ -198,7 +198,7 @@ Checking system integrity ✅
 #### Phase 1: Extended Command Support
 - [x] File manipulation commands (`throw`, `clone`, `swap`, `snap`)
 - [x] Console utilities (`wipe`)
-- [ ] Text processing commands (`cat`, `grep`, `find`)
+- [x] Text processing commands (`readout`) [] (`grep`, `find`)
 - [ ] System monitoring commands (`ps`, `top`, `df`)
 - [ ] Network utilities (`ping`, `curl`, `wget`)
 

@@ -1,4 +1,6 @@
-from .imports import *
+# Import only what we need from imports module
+from regex import fullmatch
+
 # Handle parsing of commands with duo paths (i.e: src, des)
 def pathTokeniserMulti(input):
     try:
@@ -10,10 +12,10 @@ def pathTokeniserMulti(input):
         des = clean_tokens[2]; # destination path
 
         # to identify if the drc/des is file or directory
-        # \w+ -> [a-z][A-Z][0-9]
+        # .+ -> any character including spaces
         # \. for period detection
         # ^(Start) - $(End)
-        pattern = r"^\w+\.\w+$" 
+        pattern = r"^.+\..+$" 
 
         # Hold map of the src and des
         # i.e; dir -> dir
@@ -43,12 +45,13 @@ def pathTokeniserMulti(input):
                 map["des_type"] = "dir"
 
 
-        if not map["src_type"]and not map["des_type"]:
+        if not map["src_type"] and not map["des_type"]:
                 print("⚠️  Error! Invalid Paths follow the correct format ( clone <src> <des> )")
                 return False
         return src, des, map
     except Exception as e:
-        pass
+        print(f"⚠️  Error parsing paths: {e}")
+        return False
 
 # Handle parsing of commands with mono paths (i.e: src)
 def pathTokenizerSingle(input):
@@ -86,3 +89,17 @@ def pathTokenizerSingle(input):
     
     except Exception as e:
         pass
+
+def pathtokenizerMultiple(input):
+    # seperating command from paths
+    parts = input.split('\'')
+    # cleaning whitespaces
+    clean = [part.strip() for part in parts if part.strip() and part.strip() != '>>>']
+    # pattern to understand the paths
+    pattern = r"^.+\..+$"
+    # Ignoring the command text
+    paths = clean[1:]
+    # examine the types either file or dir
+    types = ["file" if fullmatch(pattern, path) else "dir" for path in paths]
+    
+    return paths, types
