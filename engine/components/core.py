@@ -5,7 +5,6 @@ from .imports import (
 )
 from .utils import pathTokeniserMulti, pathTokenizerSingle, pathtokenizerMultiple
 import builtins
-
 # Handle directory exposure implemetation. (ie: expore directory files)
 def spitdir(self, input):
     try:     
@@ -169,17 +168,13 @@ def readout(self, input):
         if '>' in input:
             try:
                 if '>>>' in input:
-                    print('paths:', paths)
-                    print('types:', types)
 
                     for type in types:
                         with open(paths[counter], "a+") as file:
                             file.seek(0)
                             if counter == (len(types)-1):
-                                    print('accumulatorw:', accumulator)
                                     file.write(accumulator)
                             else:
-                                print('accumulatorr:', accumulator)
                                 accumulator += file.read()
                                 counter += 1
                         file.close()
@@ -190,12 +185,15 @@ def readout(self, input):
                     if types[0] == 'file':
                         capture = builtins.input("Enter you response: ");
                         if '>>' in input: # to append the captured text
-                            with open(paths[0], "a") as file:
-                                file.write(capture)
-                            file.close()
+                            with open(paths[0], "r") as seed, open(paths[2], "a") as resultant:
+                                seed_content = seed.read();
+                                accum = seed_content + capture
+                                resultant.write(accum)
+                            seed.close()
+                            resultant.close()
 
                         else: # to owerite the appended text
-                            with open(paths[0], "w") as file:
+                            with open(paths[2], "w") as file:
                                 file.write(capture)
                             file.close()
                     else:
@@ -204,7 +202,7 @@ def readout(self, input):
                 print(f"Exception Occurred: {e} \n")
 
         else:
-            # Iterating type to determine weather the typr is file or dir
+            # Iterating type to determine weather the type is file or dir
             for type in types:
                 if type == 'file':
                         with open(paths[counter], "r+") as file:
