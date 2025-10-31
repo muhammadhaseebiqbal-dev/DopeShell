@@ -3,6 +3,7 @@ from engine.dopeshell import DopeShell
 # Lets start Bits juggling from here
 def main():
     _instance = DopeShell()
+    _instance2 = DopeShell()
 
 # root cause of every event
 if __name__ == "__main__":

@@ -1,7 +1,8 @@
 # Import specific functions from imports and utils
 from .imports import (
     system, getcwd, chdir, getuser, subprocess, 
-    sleep, copy, copytree, move, rmtree, rename, remove
+    sleep, copy, copytree, move, rmtree, rename, remove,
+    ping_network, requests, wget
 )
 from .utils import pathTokeniserMulti, pathTokenizerSingle, pathtokenizerMultiple
 import builtins
@@ -221,4 +222,40 @@ def readout(self, input):
 
     except Exception as e:
         print("Exception Occurred: ", e)
+
+def ping(self, input):
+    host = input.split(' ')[1].strip();
+
+    try:      
+        result = ping_network(host)
+
+        if result is None:
+            print(f"Ping to {host} failed!")
+        else:
+            print(f"{host} {result*1000:.2f}ms")
+    except Exception as err:
+        print(err)
+
+
+def curl(self, input):
+    url = input.split(' ')[1].strip();
     
+    try:      
+        response = requests.get(url)
+
+        if response is None:
+            print(f"Host is unavailable right now!")
+        else:
+            print(f"{response.text}")
+    except requests.exceptions.RequestException as err:
+        print(err)
+
+
+def dsp(self, input):
+    url = input.split(' ')[1].strip();
+    try:
+        filename = wget.download(url)
+        print(f"\nDownloaded to: {filename}")
+    except Exception as e:
+        print(f"Download failed: {e}")
+

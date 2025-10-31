@@ -10,3 +10,8 @@ from getpass import getuser
 
 # File operations
 from shutil import copy, copytree, move, rmtree
+
+# Networking
+from ping3 import ping as ping_network
+import requests
+import wget

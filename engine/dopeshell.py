@@ -9,7 +9,7 @@ from time import sleep
 from .components.core import (
     spitdir, dive, halt, whoami, helpme, 
     reveal, clone, throw, swap, snap, wipe,
-    readout
+    readout, ping, curl, dsp
 )
 from .components.keywords import keywords
 
@@ -37,7 +37,10 @@ class DopeShell:
             "swap": swap,
             "snap": snap,
             "wipe": wipe,
-            "readout": readout
+            "readout": readout,
+            "ping": ping,
+            "curl": curl,
+            "dsp": dsp
         }
 
         # initialize the environment

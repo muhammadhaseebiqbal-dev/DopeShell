@@ -130,6 +130,11 @@ whoami                           # Get current user information
 wipe                             # Clear console screen
 --helpme                         # View all available commands
 halt                             # Exit DopeShell
+
+# Network & Package Commands
+| `ping` | Test connectivity to a host using ICMP | `ping google.com` or `ping -c 4 google.com` |
+| `curl` | Fetch HTTP(S) content from a URL and print or save it | `curl https://example.com` or `curl -o out.html https://example.com` |
+| `dsp` | Simple package utility (download/install/list) | `dsp download https://...`, `dsp install package-name`, `dsp list` |
 ```
 
 ---
@@ -210,7 +215,7 @@ Checking system integrity ✅
 - [x] Text processing commands (`readout` for file reading/writing)
 - [ ] Additional text utilities (`grep`, `find`)
 - [ ] System monitoring commands (`ps`, `top`, `df`)
-- [ ] Network utilities (`ping`, `curl`, `wget`)
+- [x] Network utilities (`ping`, `curl`, `wget`)
 
 #### Phase 2: Advanced Features
 - [ ] Command history and autocomplete
