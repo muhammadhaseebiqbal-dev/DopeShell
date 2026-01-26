@@ -1,14 +1,14 @@
-keywords = [
+keys = [
             {
-                "command": "spitdir",
+                "command": "sd",
                 "description": "list down file/folders of current directory"
             },
             {
-                "command": "dive",
+                "command": "fd",
                 "description": "change directory to specified path"
             },
             {
-                "command": "reveal",
+                "command": "wd",
                 "description": "show present working directory path"
             },
             {
@@ -20,15 +20,15 @@ keywords = [
                 "description": "terminate the current shell session"
             },
             {
-                "command": "throw",
+                "command": "mov",
                 "description": "move any file/dir from src path to destined path"
             },
             {
-                "command": "clone",
+                "command": "cpy",
                 "description": "copy any file/dir from src path to destined path (must use absolute paths)"
             },
             {
-                "command": "swap",
+                "command": "rn",
                 "description": "to remane files and folders"
             },
             {
@@ -40,12 +40,8 @@ keywords = [
                 "description": "clear the console"
             },
             {
-                "command": "readout",
+                "command": "proc",
                 "description": "file viewer and file processing"
-            },
-            {
-                "command": "--helpme",
-                "description": "show list of supported commands"
             },
             {
                 "command": "ping",
@@ -58,6 +54,9 @@ keywords = [
             {
                 "command": "dsp",
                 "description": "Simple package manager utility"
+            },      
+            {
+                "command": "--helpme",
+                "description": "show list of supported commands"
             },
-            
 ]

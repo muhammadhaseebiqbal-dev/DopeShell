@@ -1,13 +1,38 @@
-# Import specific functions from imports and utils
-from .imports import (
-    system, getcwd, chdir, getuser, subprocess, 
-    sleep, copy, copytree, move, rmtree, rename, remove,
-    ping_network, requests, wget
-)
-from .utils import pathTokeniserMulti, pathTokenizerSingle, pathtokenizerMultiple
+# / ********************************************************************************************************************* /
+
+# This file is probaly the ebrain of this marvelous shell. I know you are wondering Haseeb why are you making this shell 
+# in the era of AI powered autonomous shell. Its my choice Don't Judge me. Sometime i develop thing that does'nt make sense
+
+
+# / ********************************************************************************************************************* /
+
+
+# Standard library imports
+import platform
+import subprocess
+from time import sleep
 import builtins
+
+# OS and path operations
+from os import system, getcwd, chdir, rename, remove
+from os.path import expanduser
+from getpass import getuser
+
+# File operations
+from shutil import copy, copytree, move, rmtree
+
+# Networking
+from ping3 import ping as ping_network
+import requests
+import wget
+
+# Custom Implementation
+from .utils import pathTokeniserMulti, pathTokenizerSingle, pathtokenizerMultiple
+from ..keywords import keys
+
+
 # Handle directory exposure implemetation. (ie: expore directory files)
-def spitdir(self, input):
+def directories_exploration(self, input):
     try:     
         if self.platform == "Linux":
             result = subprocess.run("ls", shell=True, capture_output=True, text=True)
@@ -26,8 +51,8 @@ def spitdir(self, input):
         print(err)
 
 # Handle Directory changing implemetation (i.e: changing the current directory)   
-def dive(self, input):                
-        input = input[len("dive")+1:]
+def change_directory(self, input):                
+        input = input[len("fd")+1:]
         if input.startswith("'") and input.endswith("'"):
             input = input.replace("'", "")
             try:
@@ -65,21 +90,13 @@ def whoami(self, input):
     except Exception as err:
          print("Error while performing operation. Try again!") 
 
-# Show all the supported keywords
-def helpme(self, input):
-    try:
-        print(" \n Supported commands: \n ----------------------------------------------------------------------------- \n")
-        for e in self.keywords:
-            print(f"{  e["command"]:<8}        {e["description"]}\n")  
-    except Exception as err:
-         print("Error while performing operation. Try again!") 
 
 # Show present working directory
-def reveal(self, input):
+def current_wording_directory(self, input):
     print(f"\n Current Path: \n ----------------------------------------------\n {self.root }\n\n")
 
 # Handles copy implemetation
-def clone(self, input):
+def copy(self, input):
     # if not pathTokeniserMulti(input):
     #     print("⚠️  Invalid command! Try --helpme")
 
@@ -101,7 +118,7 @@ def clone(self, input):
                 pass     
 
 # Handles move implementation
-def throw(self, input):
+def move(self, input):
     if not pathTokeniserMulti(input):
         print("⚠️  Invalid command! Try --helpme")
 
@@ -114,7 +131,7 @@ def throw(self, input):
     
 
 # Handles rename implementation
-def swap(self, input):
+def rename(self, input):
     try:
         src, des, map = pathTokeniserMulti(input)
         if map["src_type"] == "file" and map["des_type"] == "file" or map["src_type"] == "dir" and map["des_type"] == "dir":
@@ -129,7 +146,7 @@ def swap(self, input):
         print(err)
 
 # Handle delete implemetation
-def snap(self, input):
+def delete_anthing(self, input):
     src, map = pathTokenizerSingle(input)
     try:
         if map["src_type"] == "file":
@@ -142,7 +159,7 @@ def snap(self, input):
         print(err)
 
 # Clear the console
-def wipe(self, input):
+def clear_console(self, input):
     if self.platform == "Windows":
         system("cls")
     else:
@@ -157,7 +174,7 @@ def wipe(self, input):
     self.life += 1
 
 # Handle readout implementation
-def readout(self, input):
+def process_file_content(self, input):
     if not input: return
                 
     try:
@@ -223,7 +240,7 @@ def readout(self, input):
     except Exception as e:
         print("Exception Occurred: ", e)
 
-def ping(self, input):
+def check_connection(self, input):
     host = input.split(' ')[1].strip();
 
     try:      
@@ -237,7 +254,7 @@ def ping(self, input):
         print(err)
 
 
-def curl(self, input):
+def make_request(self, input):
     url = input.split(' ')[1].strip();
     
     try:      
@@ -251,11 +268,52 @@ def curl(self, input):
         print(err)
 
 
-def dsp(self, input):
+def package_manager(self, input):
     url = input.split(' ')[1].strip();
     try:
         filename = wget.download(url)
         print(f"\nDownloaded to: {filename}")
     except Exception as e:
         print(f"Download failed: {e}")
+
+
+
+
+# / ********************************************************************************************************************* /
+# Here are The implemntation of flags
+
+
+# Show all the supported keywords
+def helpme(self, input):
+    try:
+        print(" \n Supported commands: \n ----------------------------------------------------------------------------- \n")
+        for e in keys:
+            print(f"{  e["command"]:<8}        {e["description"]}\n")  
+    except Exception as err:
+         print("Error while performing operation. Try again!") 
+
+
+
+
+# / ********************************************************************************************************************* /
+
+# Dictionary of helper funtions. WHY? Cause it helps in customizability of shell
+
+core_function_mapping = {
+    "directories_exploration" : directories_exploration,
+    "change_directory" : change_directory,
+    "current_wording_directory": current_wording_directory,
+    "whoami": whoami,
+    "halt" : halt,
+    "move": move,
+    "copy": copy,
+    "rename": rename,
+    "delete_anthing": delete_anthing,
+    "clear_console": clear_console,
+    "process_file_content": process_file_content,
+    "check_connection": check_connection,
+    "make_request": make_request,
+    "package_manager": package_manager,
+    "helpme": helpme,
+}
 

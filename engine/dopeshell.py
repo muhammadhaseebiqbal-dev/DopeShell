@@ -5,13 +5,9 @@ from os.path import expanduser
 from getpass import getuser
 from time import sleep
 
-# Import specific command functions from components
-from .components.core import (
-    spitdir, dive, halt, whoami, helpme, 
-    reveal, clone, throw, swap, snap, wipe,
-    readout, ping, curl, dsp
-)
-from .components.keywords import keywords
+# Custom Implementation
+from .components.core import core_function_mapping
+from .keywords import keys
 
 class DopeShell:
     def __init__(self):        
@@ -21,30 +17,16 @@ class DopeShell:
         self.history = [] # Stores history in the form of dicts
         self.life = 0 # to manage the session life (just for console operation)
 
-        # Set of defined keywords load here from mapping
-        self.keywords = keywords
 
         # Mapping to execute each keyword implemetation
-        self.engine = {
-            "spitdir": spitdir,
-            "dive": dive,
-            "halt": halt,
-            "whoami": whoami,
-            "--helpme": helpme,
-            "reveal": reveal,
-            "clone": clone,
-            "throw": throw,
-            "swap": swap,
-            "snap": snap,
-            "wipe": wipe,
-            "readout": readout,
-            "ping": ping,
-            "curl": curl,
-            "dsp": dsp
+        list_of_available_func = list(core_function_mapping.keys()); # changing dict keys so that we can invoke functions based on keywords
+        self.key_func_mapping = {
+            f'{keys[i]["command"]}': core_function_mapping[list_of_available_func[i]] for i in range(0,len(core_function_mapping))
         }
 
         # initialize the environment
         self._init_env();
+    
     def asciiArt(self):
         print(
             r'''
@@ -57,7 +39,7 @@ class DopeShell:
             '''
         )
 
-    # Handle initial rooth redirection    
+    # Handle initial root redirection    
     def goToRoot(self):
         if self.platform == "Windows":
             chdir(f"C:/users/{getuser()}")
@@ -70,13 +52,16 @@ class DopeShell:
         if not command:
             return # return if not any command input found
         else:
-            command_name = command.split(' ')[0].strip()
-            
-            # check if it exist in library
-            if command_name in self.engine:
-                self.engine[command_name](self, command)
-            else:
-                print("⚠️  Command is not available in keyword set! Type --helpme to get documentation")
+            try:
+                command_name = command.split(' ')[0].strip()
+                
+                # check if it exist in library
+                if command_name in self.key_func_mapping:
+                    self.key_func_mapping[command_name](self, command)
+                else:
+                    print("⚠️  Command is not available in keyword set! Try --helpme")
+            except Exception as e:
+                print(e)
 
     # TO daignoses the health of system
     def diagnostic(self):
@@ -84,31 +69,30 @@ class DopeShell:
 
     # Initiallise the environment
     def _init_env(self):
-        self.executeCommand("wipe")
-        print("Checking instance Config!")
-        sleep(0.5)
+        self.executeCommand(keys[9]["command"])
+        print("Checking instance Configurations!")
         print(f"Current Platform check \"{self.platform}\" ✅")
-        sleep(0.5)
-
         if self.diagnostic():
             print("Dope Shell is working perfectly ✅")
         else:
-                print("🪲 encountered!")
-        sleep(0.5)
+                print("🪲 issuce occurred while diagnosing system!")
+        sleep(0.2)
 
         print("Checking system integrity ✅")
-        sleep(2)
+        sleep(0.3)
+        print("Hold tight!")
+        sleep(0.5)
         
-        self.executeCommand("wipe")
+        self.executeCommand(keys[9]["command"])
         self.goToRoot()
         self.asciiArt();
         print("\n");
 
         while True:
             if self.platform == "Windows":
-                command = input(f"{self.root.replace("C:", "~").replace("\\", "/").strip() + ": "}")
+                command = input(f"{self.root.replace("C:", "~").replace("\\", "/").strip() + " > "}")
                 self.executeCommand(command.strip())
             else:
-                command = input(f"~{self.root}:")
+                command = input(f"~{self.root} > ")
                 self.executeCommand(command.strip())
 
