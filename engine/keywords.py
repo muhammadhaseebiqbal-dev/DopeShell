@@ -1,10 +1,10 @@
 keys = [
             {
-                "command": "sd",
+                "command": "ld",
                 "description": "list down file/folders of current directory"
             },
             {
-                "command": "fd",
+                "command": "sd",
                 "description": "change directory to specified path"
             },
             {
