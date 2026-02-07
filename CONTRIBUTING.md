@@ -32,7 +32,7 @@ Before you begin contributing, please:
 
 ```bash
 # Fork the repository on GitHub, then clone your fork
-git clone https://github.com/YOUR_USERNAME/dopeshell.git
+git clone https://github.com/muhammadhaseebiqbal-dev/dopeshell.git
 cd dopeshell
 ```
 
@@ -84,7 +84,7 @@ DopeShell uses a modular architecture. Here's how to add a new command:
 
 ### Step 1: Add Command Keyword
 
-Edit `engine/keywords.py` and add your command to the `keys` list:
+Edit `dopeshell/keywords.py` and add your command to the `keys` list:
 
 ```python
 {
@@ -95,7 +95,7 @@ Edit `engine/keywords.py` and add your command to the `keys` list:
 
 ### Step 2: Implement the Function
 
-Edit `engine/components/core.py` and create your function:
+Edit `dopeshell/components/core.py` and create your function:
 
 ```python
 def your_function_name(self, input):
@@ -120,7 +120,7 @@ def your_function_name(self, input):
 
 ### Step 3: Register the Function
 
-Add your function to the `core_function_mapping` dictionary in `core.py`:
+Add your function to the `core_function_mapping` dictionary in `dopeshell/components/core.py`:
 
 ```python
 core_function_mapping = {

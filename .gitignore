@@ -195,3 +195,5 @@ cython_debug/
 
 .venv
 .venv*
+
+web
