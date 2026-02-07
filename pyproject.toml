@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "dopeshell-cli"
+version = "0.1.1"
+authors = [
+  { name="Muhammad Haseeb", email="haseebiqbal1199@gmail.com" },
+]
+description = "A dope shell for hackers"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "regex>=2025.7.34",
+    "ping3",
+    "requests",
+    "wget",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/HaseebIqbal1199/DopeShell"
+"Bug Tracker" = "https://github.com/HaseebIqbal1199/DopeShell/issues"
+
+[project.scripts]
+dopeshell = "dopeshell.cli:main"

@@ -11,7 +11,7 @@ from .keywords import keys
 
 class DopeShell:
     def __init__(self):        
-        self.basePath = getcwd() # Directory in which dopeshell files placed
+
         self.root = chdir(expanduser("~")) # Path of the root (Dopeshell operates from here at starting)
         self.platform = platform.system() # Current operating System name
         self.history = [] # Stores history in the form of dicts

@@ -38,11 +38,14 @@
 
 ## 🛠️ Installation
 
-### Prerequisites
-- Python 3.6 or higher
-- pip (Python package manager)
+### Install via Pip (Recommended)
+You can easily install DopeShell using pip:
 
-### Installation on Linux
+```bash
+pip install dopeshell-cli
+```
+
+### Manual Installation (For Development)
 
 1. **Clone the repository**
    ```bash
@@ -52,30 +55,12 @@
 
 2. **Install dependencies**
    ```bash
-   pip3 install -r requirements.txt
+   pip install .
    ```
 
 3. **Run DopeShell**
    ```bash
-   python3 main.py
-   ```
-
-### Installation on Windows
-
-1. **Clone the repository**
-   ```powershell
-   git clone https://github.com/muhammadhaseebiqbal-dev/dopeshell.git
-   cd dopeshell
-   ```
-
-2. **Install dependencies**
-   ```powershell
-   pip install -r requirements.txt
-   ```
-
-3. **Run DopeShell**
-   ```powershell
-   python main.py
+   dopeshell
    ```
 
 ---
@@ -86,8 +71,8 @@
 
 | Command | Format | Description |
 |---------|--------|-------------|
-| `sd` | `sd` | List all files and folders in the current directory |
-| `fd` | `fd <path>` | Change directory to the specified path (relative or absolute) |
+| `ld` | `ld` | List all files and folders in the current directory |
+| `sd` | `sd <path>` | Change directory to the specified path (relative or absolute) |
 | `wd` | `wd` | Display the current working directory path |
 | `whoami` | `whoami` | Display the current user account name |
 | `wipe` | `wipe` | Clear the console screen |
@@ -132,10 +117,10 @@
 
 ```bash
 # Navigate to a directory
-fd Documents
+sd Documents
 
 # List files
-sd
+ld
 
 # Read a file
 proc myfile.txt

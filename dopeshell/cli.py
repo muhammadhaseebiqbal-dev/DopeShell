@@ -1,4 +1,4 @@
-from engine.dopeshell import DopeShell
+from .dopeshell import DopeShell
 
 # Lets start Bits juggling from here
 def main():
