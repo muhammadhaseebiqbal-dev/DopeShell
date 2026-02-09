@@ -45,6 +45,13 @@ You can easily install DopeShell using pip:
 pip install dopeshell-cli
 ```
 
+### Add python scripts to your path first (mandatory) {if not already than the pip itself give you the steps}
+then run this in terminal
+
+```bash
+dopeshell
+```
+
 ### Manual Installation (For Development)
 
 1. **Clone the repository**
