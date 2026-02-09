@@ -45,12 +45,62 @@ You can easily install DopeShell using pip:
 pip install dopeshell-cli
 ```
 
-### Add python scripts to your path first (mandatory) {if not already than the pip itself give you the steps}
-then run this in terminal
+### Add Python Scripts to Your PATH (Mandatory)
+
+Before running dopeshell from anywhere in your terminal, ensure that the Python Scripts directory is added to your system’s PATH.
+
+#### **Windows**
+
+1. **Find your Scripts path:**  
+   It's usually one of:
+   - `C:\Users\<YourUsername>\AppData\Local\Programs\Python\Python<version>\Scripts`
+   - Or run this in Command Prompt to find it:
+     ```bash
+     python -m site --user-base
+     ```
+     Add `\Scripts` at the end of the printed path.
+
+2. **Add to PATH:**
+   - Search for "Environment Variables" in the Start menu.
+   - Click "Environment Variables".
+   - Under "User variables", select `Path`, then click "Edit".
+   - Click "New" and paste your Scripts path.
+   - Click OK to close all dialogs.
+
+3. **Restart your terminal** for changes to take effect.
+
+#### **Linux / macOS**
+
+1. Open your terminal.
+2. Find your Python scripts path by running:
+   ```bash
+   python3 -m site --user-base
+   ```
+   The Scripts path will be:  
+   `<the above path>/bin`
+3. Add it to your `PATH`. For example, if your scripts are in `~/.local/bin`:
+   ```bash
+   echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bashrc
+   source ~/.bashrc
+   ```
+   > For zsh, replace `.bashrc` with `.zshrc`.
+
+4. Verify:
+   ```bash
+   which dopeshell
+   ```
+   It should show the path if installed and set correctly.
+
+Now you can run:
 
 ```bash
 dopeshell
 ```
+
+from anywhere in your terminal.
+
+---
+
 
 ### Manual Installation (For Development)
 
